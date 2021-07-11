@@ -1,0 +1,24 @@
+<ngb-accordion #acc="ngbAccordion" >
+  <ngb-panel id='panel_map' title="View or Hide map"  >
+    <ng-template ngbPanelContent>
+      <google-map
+        height="500px"
+        width="100%"
+        [zoom]="zoom"
+        [center]="center"
+        (mapClick)="setMarkerClick($event)"
+      >
+        <map-marker
+            *ngFor="let marker of markers"
+            [position]="marker.position"
+            [label]="marker.label"
+            [title]="marker.title"
+            [options]="marker.options"
+            (mapClick)='removeMarker($event)'
+          >
+        </map-marker>
+      </google-map>
+    </ng-template>
+  </ngb-panel>
+  
+</ngb-accordion>

@@ -1,0 +1,17 @@
+<div class="login-page">
+  <form [formGroup]="formGroup" class="login-content col-md-4" (validSubmit)="login()">
+    <h3>Login</h3>
+    <div class="login-form">
+      <label for="form1" class="">User</label>
+      <input mdbInput type="text" formControlName="UserName" [(ngModel)]="authModel.userName" class="form-control">
+    </div>
+    <div class="login-form">
+      <label for="form1" class="">Password</label>
+      <input mdbInput type="password"  formControlName="Password" [(ngModel)]="authModel.password" class="form-control">
+    </div>
+    <div class="login-form">
+      <button class="btn btn-primary float-right" type="submit"  >Login</button>
+    </div>
+  </form>
+  
+</div>

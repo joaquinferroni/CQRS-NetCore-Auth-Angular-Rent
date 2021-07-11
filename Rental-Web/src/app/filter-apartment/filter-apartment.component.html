@@ -1,0 +1,39 @@
+<ngb-accordion #acc="ngbAccordion" >
+  <ngb-panel >
+    <ng-template ngbPanelHeader>
+      <button ngbPanelToggle class="btn btn-sm btn-outline-primary ml-2">View Filters</button>
+    </ng-template>
+    <ng-template ngbPanelContent >
+      <div class="row">
+        <div class="add-apartment-form col-md-1">
+          <label for="form1" class="">Size From</label>
+          <input mdbInput type="number" min="0" [(ngModel)]="filter.sizeFrom" class="form-control">
+        </div>
+        <div class="add-apartment-form col-md-1">
+          <label for="form1" class="">Size To</label>
+          <input mdbInput type="number" min="0"  [(ngModel)]="filter.sizeTo" class="form-control">
+        </div>
+        <div class="add-apartment-form col-md-1">
+          <label for="form1" class="">Price From</label>
+          <input mdbInput type="number" min="0" [(ngModel)]="filter.priceFrom" class="form-control">
+        </div>
+        <div class="add-apartment-form col-md-1">
+          <label for="form1" class="">Price To</label>
+          <input mdbInput type="number" min="0" [(ngModel)]="filter.priceTo" class="form-control">
+        </div>
+        <div class="add-apartment-form col-md-1">
+          <label for="form1" class="">Rooms From</label>
+          <input mdbInput type="number" min="0" [(ngModel)]="filter.roomsFrom" class="form-control">
+        </div>
+        <div class="add-apartment-form col-md-1">
+          <label for="form1" class="">Rooms To</label>
+          <input mdbInput type="number" min="0" [(ngModel)]="filter.roomsTo" class="form-control">
+        </div>
+        <div class="add-apartment-form col-md-1">
+          <label for="form1" class=""></label>
+          <button class="btn btn-primary search-btn" (click)="search()">Search</button>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

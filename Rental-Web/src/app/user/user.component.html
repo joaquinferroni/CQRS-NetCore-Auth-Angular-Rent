@@ -1,0 +1,55 @@
+<div class="content">
+  <form [formGroup]="formGroup" class="user-content-form row" (validSubmit)="save()">
+    <div class="add-user-form col-md-4">
+      <label for="UserName" class="">User name</label>
+      <input mdbInput type="text" formControlName="UserName" [(ngModel)]="currentModel.userName" class="form-control">
+    </div>
+    <div class="add-user-form col-md-4">
+      <label for="Name" class="">Name</label>
+      <input mdbInput type="text" formControlName="Name" [(ngModel)]="currentModel.name" class="form-control">
+    </div>
+    <div class="add-user-form col-md-4" >
+      <label  class="">Role</label>
+      <div ngbDropdown >
+        <a class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{currentModel.role}}</a>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <a ngbDropdownItem (click)="currentModel.role = 'ADMIN'">ADMIN</a>
+          <a ngbDropdownItem (click)="currentModel.role = 'REALTOR'">REALTOR</a>
+          <a ngbDropdownItem (click)="currentModel.role = 'USER'">USER</a>
+        </div>
+      </div>
+    </div>
+    <div class="add-user-form col-md-4" *ngIf='currentModel.id === 0'>
+      <label for="Password" class="">Password</label>
+      <input mdbInput type="password"  formControlName="Password"  [(ngModel)]="currentModel.password" class="form-control">
+    </div>
+    <div class="add-user-form  col-md-4">
+      <button class="add-user-btn btn btn-primary float-right" *ngIf='currentModel.id !== 0' (click)='cleanFields()'  >Cancel</button>
+      <button class="add-user-btn btn btn-primary float-right" type="submit" >Save</button>
+    </div>
+  </form>
+  <hr>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">User name</th>
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ user.userName }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.role }}</td>
+      <td>
+        <button class="btn btn-primary" (click)='edit(user)'>Edit</button>
+        <button class="btn btn-danger" *ngIf='user.userName !== me' (click)='performDelete(user.userName)'>Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,18 @@
+.btn-login-toolbar{
+  background-color: #0a488357;
+  color: white;
+}
+.btn-register{
+  color: white;
+}
+.navbar{
+  display: inline!important;
+}
+
+#navbarsDefault{
+  display: inline-flex!important;
+  cursor: pointer;
+}
+.dropdown-menu{
+  left:-100px;
+}

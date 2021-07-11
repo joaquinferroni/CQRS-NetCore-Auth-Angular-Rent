@@ -1,0 +1,16 @@
+.content{
+  margin-top:60px;
+  margin-left:15px;
+}
+.btn{
+  margin-left:5px;
+}
+
+.user-content-form{
+  display:inline-flex;
+}
+
+.add-user-btn{
+  position: sticky;
+  margin-top: 25px;
+}

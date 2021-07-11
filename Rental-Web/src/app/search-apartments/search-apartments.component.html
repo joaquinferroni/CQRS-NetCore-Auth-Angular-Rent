@@ -1,0 +1,19 @@
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <app-filter-apartment (doSearch)="filterChange($event)"></app-filter-apartment>
+    </div>
+    <div class="col-md-4 list-apartment">
+      <div  *ngFor='let a of apartments' (mouseenter)="moveMarker(a)" >
+        <app-item-apartment [apartment]='a'></app-item-apartment>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <app-map
+        [allowSetMarket]=false 
+        [viewMap]=true
+        [events]="setMarkerEvent.asObservable()"
+      ></app-map>
+    </div>
+  </div>
+</div>

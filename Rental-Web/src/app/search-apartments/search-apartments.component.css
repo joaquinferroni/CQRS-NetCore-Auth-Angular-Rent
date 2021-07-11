@@ -1,0 +1,19 @@
+.content{
+  margin-top:60px;
+  margin-left:15px;
+}
+
+.row{
+  margin-right: 5px;
+}
+
+.list-apartment{
+  margin:4px, 4px;
+  padding:4px;
+  background-color: #f6e6e673;
+  width: 500px;
+  height: 600px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align:justify;
+}

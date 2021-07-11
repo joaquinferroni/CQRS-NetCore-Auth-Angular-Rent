@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+  <a class="navbar-brand" [routerLink]="['/search']">Rental App</a>
+  <button class="btn btn-login-toolbar float-right" *ngIf='!currentUser.userName' [routerLink]="['/login']">Login</button>
+  <!-- <button class="btn btn-link btn-register float-right" [routerLink]="['/register']">Register</button> -->
+  
+  <div [ngbCollapse]="true" class="collapse navbar-collapse float-right" *ngIf='currentUser.userName'  id="navbarsDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown" ngbDropdown>
+        <a class="nav-link dropdown-toggle" id="id01" ngbDropdownToggle>Menu</a>
+        <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
+          <a class="dropdown-item"  [routerLink]="['/search']">Search</a>
+          <a class="dropdown-item" *ngIf='currentUser.role === "ADMIN"' [routerLink]="['/user']">Users</a>
+          <a class="dropdown-item" *ngIf='currentUser.role === "REALTOR" || currentUser.role === "ADMIN"' [routerLink]="['/manage-my-apartments']">My Apartments</a>
+          <a class="dropdown-item" *ngIf='currentUser.role === "ADMIN"' [routerLink]="['/apartments-management']">All Apartments</a>
+          <a class="dropdown-item"  (click) = 'logout()'>Log out</a>
+        </div>
+      </li>
+    </ul> 
+ </div>
+</nav>
+    <router-outlet></router-outlet>

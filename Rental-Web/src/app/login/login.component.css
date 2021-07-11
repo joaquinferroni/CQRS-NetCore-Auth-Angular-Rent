@@ -1,0 +1,16 @@
+
+.login-page{
+  width: 100%;
+  height: 100%;
+}
+.login-content{
+  padding: 15px 10px 15px 10px ;
+  border-style: inset;
+  position: absolute;
+  left:33%;
+  top:25%;
+  height: 40%;
+}
+.login-form{
+  margin-top:5px;
+}

@@ -1,0 +1,82 @@
+<div class="content">
+    <form [formGroup]="formGroup" class="apartment-content-form row" (validSubmit)="save()">
+      <div class="add-apartment-form col-md-4">
+        <label for="form1" class="">Name</label>
+        <input mdbInput type="text" formControlName="Name" [(ngModel)]="currentModel.name" class="form-control">
+      </div>
+      <div class="add-apartment-form col-md-4">
+        <label for="form1" class="">Description</label>
+        <input mdbInput type="text" formControlName="Description" [(ngModel)]="currentModel.description" class="form-control">
+      </div>
+      <div class="add-apartment-form col-md-4">
+        <label for="form1" class="">Floor</label>
+        <input mdbInput type="number" formControlName="Floor" [(ngModel)]="currentModel.floor" class="form-control">
+      </div>
+      <div class="add-apartment-form col-md-4">
+        <label for="form1" class="">Size</label>
+        <input mdbInput type="number" formControlName="Size" [(ngModel)]="currentModel.size" class="form-control">
+      </div>
+      <div class="add-apartment-form col-md-4">
+        <label for="form1" class="">Price</label>
+        <input mdbInput type="number" formControlName="Price" [(ngModel)]="currentModel.price" class="form-control">
+      </div>
+      <div class="add-apartment-form col-md-4">
+        <label for="form1" class="">Rooms</label>
+        <input mdbInput type="number" formControlName="Rooms" [(ngModel)]="currentModel.rooms" class="form-control">
+      </div>
+      <div class="add-apartment-form col-md-4" >
+        <label for="form1" class="">Status</label>
+        <div ngbDropdown >
+          <a class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{currentModel.status}}</a>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <a ngbDropdownItem (click)="currentModel.status = 'AVAILABLE'">AVAILABLE</a>
+            <a ngbDropdownItem (click)="currentModel.status = 'RENTED'">RENTED</a>
+          </div>
+        </div>
+      </div>     
+      <div class="add-user-form  col-md-4">
+        <button class="add-apartment-btn btn btn-primary float-right" *ngIf='currentModel.id !== 0' (click)='cleanFields()'  >Cancel</button>
+        <button class="add-apartment-btn btn btn-primary float-right" type="submit" >Save</button>
+      </div>
+    </form>
+    <app-map 
+      [allowSetMarket]=true 
+      [events]="addMarkerSubject.asObservable()"
+      (onSetMarker)="addLatLong($event)"></app-map>
+    <hr> 
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Floor</th>
+        <th scope="col">Size</th>
+        <th scope="col">Price</th>
+        <th scope="col">Rooms</th>
+        <th scope="col">Status</th>
+        <th scope="col">User</th>
+        <th scope="col">Creation Date</th>
+        <th scope="col">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let apartment of apartments; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ apartment.name }}</td>
+        <td>{{ apartment.description }}</td>
+        <td>{{ apartment.floor }}</td>
+        <td>{{ apartment.size }}</td>
+        <td>{{ apartment.price |currency }}</td>
+        <td>{{ apartment.rooms }}</td>
+        <td>{{ apartment.status }}</td>
+        <td>{{ apartment.userName }}</td>        
+        <td>{{ apartment.created_At | date }}</td>
+        <td>
+          <button class="btn btn-primary" (click) ='edit(apartment)'>Edit</button>
+          <button class="btn btn-danger" (click) ='delete(apartment)' >Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
