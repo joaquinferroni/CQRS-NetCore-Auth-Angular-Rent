@@ -1,6 +1,6 @@
 
 ## Open
-    -rental-api -> localhost:5001 (this will open swagger) or /health to ckeck if it works
+    -rental-api -> localhost:5001 (this will open swagger) or /api/health to ckeck if it works
 
 # Solution Structure
 
