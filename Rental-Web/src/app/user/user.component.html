@@ -1,14 +1,16 @@
 <div class="content">
+  <h3>Manage all Users</h3>
+  <hr>
   <form [formGroup]="formGroup" class="user-content-form row" (validSubmit)="save()">
-    <div class="add-user-form col-md-4">
+    <div class="add-user-form col-md-3">
       <label for="UserName" class="">User name</label>
       <input mdbInput type="text" formControlName="UserName" [(ngModel)]="currentModel.userName" class="form-control">
     </div>
-    <div class="add-user-form col-md-4">
+    <div class="add-user-form col-md-3">
       <label for="Name" class="">Name</label>
       <input mdbInput type="text" formControlName="Name" [(ngModel)]="currentModel.name" class="form-control">
     </div>
-    <div class="add-user-form col-md-4" >
+    <div class="add-user-form col-md-3" >
       <label  class="">Role</label>
       <div ngbDropdown >
         <a class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{currentModel.role}}</a>
@@ -19,13 +21,13 @@
         </div>
       </div>
     </div>
-    <div class="add-user-form col-md-4" *ngIf='currentModel.id === 0'>
+    <div class="add-user-form col-md-3" *ngIf='currentModel.id === 0'>
       <label for="Password" class="">Password</label>
       <input mdbInput type="password"  formControlName="Password"  [(ngModel)]="currentModel.password" class="form-control">
     </div>
     <div class="add-user-form  col-md-4">
-      <button class="add-user-btn btn btn-primary float-right" *ngIf='currentModel.id !== 0' (click)='cleanFields()'  >Cancel</button>
-      <button class="add-user-btn btn btn-primary float-right" type="submit" >Save</button>
+      <button class="add-user-btn btn btn-primary float-left" type="submit" >Save</button>
+      <button class="add-user-btn btn btn-primary float-left" *ngIf='currentModel.id !== 0' (click)='cleanFields()'  >Cancel</button>
     </div>
   </form>
   <hr>

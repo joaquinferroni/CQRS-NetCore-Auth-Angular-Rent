@@ -40,6 +40,7 @@ export class UserComponent implements OnInit {
   edit(user:UserModel){
     this.currentModel = Object.assign({}, user);
     this.currentModel.password = '.';
+    window.scroll(0,0);
   }
 
   save(){

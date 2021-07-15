@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ApartmentFilter, ApartmentModel } from '../models/apartment';
 import { ApartmentService } from '../services/apartment.service';
 
@@ -8,18 +9,19 @@ import { ApartmentService } from '../services/apartment.service';
   styleUrls: ['./my-apartments.component.css'  ]
 })
 export class MyApartmentsComponent implements OnInit {
-
+  reloadData: Subject<ApartmentModel[]> = new Subject<ApartmentModel[]>();
   apartments: ApartmentModel[] = [];
   currentModel: ApartmentModel = new ApartmentModel(); 
   constructor(private apartmentService: ApartmentService) { }
 
   ngOnInit(): void {
-    this.loadApartments();
+    this.loadMyApartments();
   }
 
-  loadApartments(){
+  loadMyApartments(){
     this.apartmentService.getMine().subscribe(data=>{
       this.apartments = data;
+      this.reloadData.next(data);
     })
   }
 
@@ -31,19 +33,19 @@ export class MyApartmentsComponent implements OnInit {
 
   performSave(model:ApartmentModel){
     this.apartmentService.insert(model).subscribe(data=>{
-      this.loadApartments();
+      this.loadMyApartments();
       alert("apartment saved");
     })
   }
   performUpdate(model:ApartmentModel){
     this.apartmentService.update(model).subscribe(data=>{
-      this.loadApartments();
+      this.loadMyApartments();
       alert("apartment updated");
     })
   }
   delete(model:ApartmentModel){
     this.apartmentService.delete(model.id).subscribe(data=>{
-      this.loadApartments();
+      this.loadMyApartments();
       alert("apartment deleted");
     })
   }

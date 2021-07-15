@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ApartmentFilter, ApartmentModel } from '../models/apartment';
 import { ApartmentService } from '../services/apartment.service';
 
@@ -9,6 +10,7 @@ import { ApartmentService } from '../services/apartment.service';
   ]
 })
 export class AdminManagementApartmentComponent implements OnInit {
+  reloadData: Subject<ApartmentModel[]> = new Subject<ApartmentModel[]>();
   apartments: ApartmentModel[] = [];
   currentModel: ApartmentModel = new ApartmentModel(); 
   constructor(private apartmentService: ApartmentService) { }
@@ -20,6 +22,7 @@ export class AdminManagementApartmentComponent implements OnInit {
   loadApartments(){
     this.apartmentService.getAllAdmin(new ApartmentFilter()).subscribe(data=>{
       this.apartments = data;
+      this.reloadData.next(data);
     })
   }
 

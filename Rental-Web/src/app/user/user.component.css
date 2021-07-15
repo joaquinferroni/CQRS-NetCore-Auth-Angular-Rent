@@ -7,10 +7,14 @@
 }
 
 .user-content-form{
-  display:inline-flex;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .add-user-btn{
   position: sticky;
   margin-top: 25px;
+}
+#dropdownBasic1{
+  width: 100%;
 }

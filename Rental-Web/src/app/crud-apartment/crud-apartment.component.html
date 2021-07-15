@@ -24,7 +24,7 @@
         <label for="form1" class="">Rooms</label>
         <input mdbInput type="number" formControlName="Rooms" [(ngModel)]="currentModel.rooms" class="form-control">
       </div>
-      <div class="add-apartment-form col-md-4" >
+      <div class="add-apartment-form col-md-2" >
         <label for="form1" class="">Status</label>
         <div ngbDropdown >
           <a class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{currentModel.status}}</a>
@@ -35,8 +35,8 @@
         </div>
       </div>     
       <div class="add-user-form  col-md-4">
-        <button class="add-apartment-btn btn btn-primary float-right" *ngIf='currentModel.id !== 0' (click)='cleanFields()'  >Cancel</button>
-        <button class="add-apartment-btn btn btn-primary float-right" type="submit" >Save</button>
+        <button class="add-apartment-btn btn btn-primary float-left" type="submit" >Save</button>
+        <button class="add-apartment-btn btn btn-primary float-left" *ngIf='currentModel.id !== 0' (click)='cleanFields()'  >Cancel</button>
       </div>
     </form>
     <app-map 
@@ -44,6 +44,9 @@
       [events]="addMarkerSubject.asObservable()"
       (onSetMarker)="addLatLong($event)"></app-map>
     <hr> 
+      <div class="form-group form-inline">
+        Search in table: <input class="form-control ml-2" type="text" [(ngModel)]="searchFilter" (ngModelChange)="search($event)"/>
+      </div>
     <table class="table table-striped">
       <thead>
       <tr>
@@ -61,7 +64,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let apartment of apartments; index as i">
+      <tr *ngFor="let apartment of apartMentsFiltered$ ; index as i">
         <th scope="row">{{ i + 1 }}</th>
         <td>{{ apartment.name }}</td>
         <td>{{ apartment.description }}</td>

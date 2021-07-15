@@ -1,6 +1,11 @@
 <div class='content'>
-  <h1>Manage all apartments</h1>
+  <h3>Manage all apartments</h3>
   <hr>
-  <app-crud-apartment [apartments]="apartments" (onSave)="save($event)" (onDelete)="delete($event)"></app-crud-apartment>',
+  <app-crud-apartment 
+  [apartments]="apartments" 
+  [reloadEvent]="reloadData.asObservable()"
+  (onSave)="save($event)" 
+  (onDelete)="delete($event)"
+  ></app-crud-apartment>',
 
 </div>

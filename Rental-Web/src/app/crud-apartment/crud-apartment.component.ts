@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import {  FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable,  Subject } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { ApartmentFilter, ApartmentModel } from '../models/apartment';
 import { ApartmentService } from '../services/apartment.service';
 
@@ -11,17 +12,34 @@ import { ApartmentService } from '../services/apartment.service';
 })
 export class CrudApartmentComponent implements OnInit {
   @Input() apartments: ApartmentModel[] = [];
-  currentModel: ApartmentModel = new ApartmentModel(); 
+  @Input() reloadEvent!: Observable<ApartmentModel[]>;
   @Output() onSave = new EventEmitter<ApartmentModel>();
   @Output() onDelete = new EventEmitter<ApartmentModel>();
+  apartMentsFiltered$!: ApartmentModel[];
+  currentModel: ApartmentModel = new ApartmentModel(); 
   addMarkerSubject: Subject<any> = new Subject<any>();
   formGroup!: FormGroup;
+  searchFilter:string='';
   constructor(private apartmentService: ApartmentService) { }
 
   ngOnInit(): void {
     this.loadFormGroup();
-    this.loadApartments();
+    if(this.reloadEvent)
+      this.reloadEvent.subscribe(data => {
+        this.apartments = data;
+        this.search('');
+      });
   }
+
+  search(text: string) {
+    this.apartMentsFiltered$ = this.apartments.filter(a => {
+      const term = text.toLowerCase();
+      return a.name.toLowerCase().includes(term)
+          || a.description.includes(term)
+          || a.userName.includes(term);
+    });
+  }
+
   loadFormGroup(){
     this.formGroup = new FormGroup({
       Name: new FormControl('', [
@@ -45,18 +63,12 @@ export class CrudApartmentComponent implements OnInit {
       ]),
       Rooms: new FormControl('', [
         Validators.required,
-        Validators.min(1)
+        Validators.min(1),
       ])
       
     });
   }
 
-  loadApartments(){
-    this.apartmentService.getAllAdmin(new ApartmentFilter()).subscribe(data=>{
-      this.apartments = data;
-      console.table(data);
-    })
-  }
 
   addLatLong(event:google.maps.LatLngLiteral){
     this.currentModel.latitude = event.lat;
@@ -84,6 +96,7 @@ export class CrudApartmentComponent implements OnInit {
       lng: this.currentModel.longitude,
       title: this.currentModel.name
     });
+    window.scroll(0,0);
   }
 
   cleanFields(){
