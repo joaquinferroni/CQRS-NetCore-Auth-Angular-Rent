@@ -1,5 +1,5 @@
 <div class="login-page">
-  <form [formGroup]="formGroup" class="login-content col-md-4" (validSubmit)="login()">
+  <form [formGroup]="formGroup" *ngIf="!viewRegister" class="login-content col-md-4" (validSubmit)="login()">
     <h3>Login</h3>
     <div class="login-form">
       <label for="form1" class="">User</label>
@@ -10,7 +10,32 @@
       <input mdbInput type="password"  formControlName="Password" [(ngModel)]="authModel.password" class="form-control">
     </div>
     <div class="login-form">
+      <a class="btn btn-link float-right" (click)="viewRegister = true">/ Register</a>
       <button class="btn btn-primary float-right" type="submit"  >Login</button>
+    </div>
+  </form>
+
+  <form [formGroup]="formGroupRegister" *ngIf="viewRegister" class="login-content col-md-4" (validSubmit)="register()">
+    <h3>Register</h3>
+    <div class="login-form">
+      <label for="form1" class="">User</label>
+      <input mdbInput type="text" formControlName="UserName" [(ngModel)]="registerModel.userName" class="form-control">
+    </div>
+    <div class="login-form">
+      <label for="form1" class="">Name</label>
+      <input mdbInput type="text" formControlName="Name" [(ngModel)]="registerModel.name" class="form-control">
+    </div>
+    <div class="login-form">
+      <label for="form1" class="">Password</label>
+      <input mdbInput type="password"  formControlName="Password" [(ngModel)]="registerModel.password" class="form-control">
+    </div>
+    <div class="login-form">
+      <label for="form1" class="">Repeat-Password</label>
+      <input mdbInput type="password"  formControlName="ConfirmPassword" class="form-control">
+    </div>
+    <div class="login-form">
+      <a class="btn btn-link float-right" (click)="viewRegister = false">/ Back to login</a>
+      <button class="btn btn-primary float-right" type="submit"  >Register</button>
     </div>
   </form>
   

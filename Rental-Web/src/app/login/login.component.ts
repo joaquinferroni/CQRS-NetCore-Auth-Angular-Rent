@@ -1,11 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { Auth } from '../models/auth';
 import { AuthService } from '../services/auth.service';
 import jwt_decode from 'jwt-decode';
 import { Router } from '@angular/router';
 import { UserModel } from '../models/UserModel';
 import { BehaviorSubject } from 'rxjs';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +16,16 @@ import { BehaviorSubject } from 'rxjs';
 export class LoginComponent implements OnInit {
   public static logginSuccess = new BehaviorSubject<UserModel>(new UserModel(0,'',''));
   formGroup!: FormGroup;
+  formGroupRegister!: FormGroup;
   authModel!: Auth;
-  constructor(public authService: AuthService
+  registerModel: UserModel = new UserModel(0,'','USER');
+  viewRegister:boolean = false;
+  constructor(
+    public authService: AuthService
+    ,public userService:UserService
     ,private router: Router
+    ,private formBuilder: FormBuilder
+    
     ) { 
       localStorage.removeItem('token');
       localStorage.removeItem('userName');
@@ -34,6 +42,20 @@ export class LoginComponent implements OnInit {
         Validators.required,
       ])
     });
+    this.formGroupRegister = this.formBuilder.group({
+      UserName: new FormControl('', [
+        Validators.required,
+      ]),
+      Name: new FormControl('',[
+        Validators.required
+      ]),
+      Password: new FormControl('', [
+        Validators.required,
+      ]),
+      ConfirmPassword: new FormControl('', [Validators.required])
+    },{
+      validator: this.mustMatch('Password', 'ConfirmPassword')
+    });
   }
 
   login(){
@@ -47,4 +69,29 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['search']);
     });
   }
+
+  register(){
+    this.userService.insert(this.registerModel).subscribe(data=>{
+      this.viewRegister = false;
+      this.formGroupRegister.reset();
+      alert("User registered correctly!!");
+      this.registerModel = new UserModel(0,'','USER');
+    });
+  }
+
+  mustMatch(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+        const control = formGroup.controls[controlName];
+        const matchingControl = formGroup.controls[matchingControlName];
+
+        if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+            return;
+        }
+        if (control.value !== matchingControl.value) {
+            matchingControl.setErrors({ mustMatch: true });
+        } else {
+            matchingControl.setErrors(null);
+        }
+    }
+}
 }
