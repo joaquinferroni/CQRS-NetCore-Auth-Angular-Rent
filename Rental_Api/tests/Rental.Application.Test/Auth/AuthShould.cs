@@ -32,7 +32,7 @@ namespace Rental.Application.Test.Auth
         public async Task Return_An_Error_Because_Of_UserName_Not_Exists()
         {
             _repository.Setup(x => x.GetByUserName(It.IsAny<string>()))
-                .Returns(() => Result.Success<User>(null));
+                .Returns(() => Result.Success<Domain.Entities.User>(null));
 
             var result = await _handler.Handle(new AuthenticateCommand()
             {

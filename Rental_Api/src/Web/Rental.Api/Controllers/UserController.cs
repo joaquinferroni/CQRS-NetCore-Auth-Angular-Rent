@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Rental.Api.Infrastructure.HttpResponses;
 using Rental.Domain.Dtos;
@@ -42,13 +44,17 @@ namespace Rental.Api.Controllers
         } 
 
         [HttpPost]
-        [Authorize(Roles = "ADMIN")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 404)]
         public async Task<IActionResult> Post([FromBody] CreateUserCommand command)
-            => (await _mediator.Send(command)).ToHttpResponse();
-
+        {
+            var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if(role != "ADMIN")
+                command.Role = "USER";  
+            return (await _mediator.Send(command)).ToHttpResponse();
+        }
 
         [HttpGet]
         [Authorize(Roles = "ADMIN")]

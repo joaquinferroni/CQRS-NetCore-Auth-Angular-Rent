@@ -29,8 +29,8 @@ namespace Rental.Application.Test.UserTest
         public async Task Return_An_Error_Because_Of_UserName_Already_Exists()
         {
             _repository.Setup(x => x.GetByUserName(It.IsAny<string>()))
-                .Returns(() => Result.Success<User>(
-                    User.Create(0,"fdsa","fdsa",new byte[2],new byte[2], "dsa" ).Value
+                .Returns(() => Result.Success<Domain.Entities.User>(
+                    Domain.Entities.User.Create(0,"fdsa","fdsa",new byte[2],new byte[2], "dsa" ).Value
                     ));
 
             var result = await _handler.Handle(new CreateUserCommand()
